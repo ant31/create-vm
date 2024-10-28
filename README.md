@@ -321,3 +321,11 @@ which is why I wrote the `get-vm-ip` script.
 
 `virsh net-dhcp-leases $network` - Shows current DHCP leases when virsh is acting as the
 DHCP server. Leases may be shown for machines that no longer exist.
+
+
+
+# Examples:
+A base image can be found inside the quay.io containers
+```
+sudo ./create-vm -n v7    -i ~/vms/base/v6.img  -k ~/.ssh/id_ed25519.pub -s 40
+```
