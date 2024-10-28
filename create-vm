@@ -117,12 +117,12 @@ cat > "$VM_IMAGE_DIR/init/user-data" << EOF
 #cloud-config
 
 users:
-  - name: ansible
+  - name: kubespray
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
-    groups: sudo
-    shell: /bin/bash
-    homedir: /var/ansible
+    plain_text_passwd: kubespray
+    lock_passwd: false
     ssh_authorized_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJyJO0EoAZvxlE09TNx22N9isi3w4zjw4Nm6ivqU2Mi6 2t.antoine+al-dev@gmail.com"
 EOF
 
 echo "Adding keys from the public key file $AUTH_KEYS_FQN to the user-data file"
@@ -145,10 +145,10 @@ MACCMD=
 if [[ -n $MAC ]]; then
     MACCMD="--mac=${MAC}"
 fi
-
+# "bridge=${BRIDGE},model=virtio" $MACCMD \
 virt-install \
     --name="${HOSTNAME}" \
-    --network "bridge=${BRIDGE},model=virtio" $MACCMD \
+    --network network=default \
     --import \
     --disk "path=${VM_IMAGE_DIR}/images/${HOSTNAME}.img,format=qcow2" \
     --disk "path=$VM_IMAGE_DIR/images/${HOSTNAME}-cidata.img,device=cdrom" \

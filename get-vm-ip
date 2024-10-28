@@ -34,4 +34,9 @@ if [[ -z $HOSTNAME ]]; then
 fi
 
 MAC=$(virsh -q domiflist $HOSTNAME | awk '{ print $5 }')
-arp -e | grep -i $MAC | awk '{ print $1 }'
+
+ip=`arp -e | grep -i $MAC | awk '{ print $1 }'`
+while ! [[ $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; do
+    ip=`arp -e | grep -i $MAC | awk '{ print $1 }'`
+done
+echo $ip

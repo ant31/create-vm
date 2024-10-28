@@ -1,0 +1,16 @@
+network:
+    ethernets:
+        ens3:
+            dhcp4: false
+            dhcp6: false
+            addresses:
+            - 192.168.122.22/24
+            match:
+                macaddress: 52:54:00:45:6e:87
+            set-name: ens3
+            routes:
+            - to: default
+              via: 192.168.122.1
+            nameservers:
+              addresses: [8.8.8.8]
+    version: 2
